@@ -19,6 +19,9 @@
       "@/components/*": ["components/*"],
       "@/lib/*": ["lib/*"],
       "@/layout/*": ["layout/*"],
+      "@/store/*": ["store/*"],
+      "@/hooks/*": ["hooks/*"],
+      "~/*": ["./*"]
     }
   },
   "exclude": ["node_modules"],
