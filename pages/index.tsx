@@ -29,32 +29,10 @@ type Props = {
 
 const Blog: React.FC<Props> = (props) => {
   return (
-    <Layout>
-      <div className="page">
-        <Button className={buttonVariants({ variant: "outline" })}> Public Feed </Button>
-        <main>
-          {props.feed.map((post) => (
-            <div key={post.id} className="post">
-              <Post post={post} />
-            </div>
-          ))}
-        </main>
-      </div>
-      <style jsx>{`
-        .post {
-          background: white;
-          transition: box-shadow 0.1s ease-in;
-        }
-
-        .post:hover {
-          box-shadow: 1px 1px 3px #aaa;
-        }
-
-        .post + .post {
-          margin-top: 2rem;
-        }
-      `}</style>
-    </Layout>
+    <div className="page">
+      <Button className={buttonVariants({ variant: "outline" })}> Public Feed </Button>
+      123
+    </div>
   );
 };
 
