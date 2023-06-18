@@ -6,13 +6,14 @@ type Props = {
 };
 
 const Layout: React.FC<Props> = (props) => {
-  
   return (
-    <section className="w-full h-screen bg-slate-200 dark:bg-black/80 dark:text-#fff">
+    <section className="w-full h-screen flex flex-col app-container">
       <AdminHeader />
-      <section>
-        <aside><Button>abc</Button></aside>
-        <main>{props.children}</main>
+      <section className="flex">
+        <aside className="row-span-3">
+          <Button>abc</Button>
+        </aside>
+        <main className="row-span-2 col-span-2">{props.children}</main>
       </section>
     </section>
   );

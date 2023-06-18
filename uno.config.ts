@@ -12,7 +12,7 @@ import {
 
 export default defineConfig({
 	shortcuts: [
-		// ...
+		['app-container', 'bg-#ffffff text-#1c1f23 dark:bg-#232429 dark:text-#f9f9f9']
 	],
 	theme: {
 		colors: {
@@ -71,9 +71,7 @@ export default defineConfig({
 		animation: {
 			"accordion-down": "accordion-down 0.2s ease-out",
 			"accordion-up": "accordion-up 0.2s ease-out",
-		},
-		
-		  
+		},  
 	},
 	presets: [
 		presetUno({dark: 'class'}),
