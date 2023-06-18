@@ -1,4 +1,8 @@
 :root {
+
+	--app-background: #ffffff ;
+	--app-foreground: #1c1f23;
+
 	--background: 0, 0%, 100%;
 	--foreground: 222.2, 47.4%, 11.2%;
 
@@ -32,6 +36,10 @@
 }
 
 .dark {
+
+	--app-background: #232429 ;
+	--app-foreground: #f9f9f9;
+
 	--background: 224, 71%, 4%;
 	--foreground: 213, 31%, 91%;
 

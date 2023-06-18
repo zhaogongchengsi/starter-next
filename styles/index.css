@@ -1,0 +1,9 @@
+
+
+:root {
+	--admin-header-height: 60px;
+}
+
+.admin-main-box {
+	height: calc(100vh - var(--admin-header-height));
+}
