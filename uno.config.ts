@@ -12,7 +12,8 @@ import {
 
 export default defineConfig({
 	shortcuts: [
-		['app-container', 'bg-#ffffff text-#1c1f23 dark:bg-#232429 dark:text-#f9f9f9']
+		['app-container', 'bg-#ffffff text-#1c1f23 dark:bg-#232429 dark:text-#f9f9f9'],
+		['app-sider-border-t', 'border-t border-gray-400/40 dark:border-gray-200/20']
 	],
 	theme: {
 		colors: {

@@ -63,6 +63,9 @@ dependencies:
     version: 1.0.6(tailwindcss@3.3.2)
 
 devDependencies:
+  '@iconify-json/tabler':
+    specifier: ^1.1.79
+    version: 1.1.79
   '@types/next-auth':
     specifier: 3.13.0
     version: 3.13.0
@@ -669,6 +672,12 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /@iconify-json/tabler@1.1.79:
+    resolution: {integrity: sha512-O3RtNqP5ZaP8abkLR/JJuqPY2JjsuV1ttK3xttbcCE9Uz11Pu1WpmbGJ8jv75DoAGYoZ784VUgL8oiJcINLblw==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
 
   /@iconify/types@2.0.0:
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
