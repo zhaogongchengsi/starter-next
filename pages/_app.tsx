@@ -1,6 +1,7 @@
 import { SessionProvider } from "next-auth/react";
 import { AppProps } from "next/app";
-import "@/styles/globals.css";
+import "@/styles/unocss.css";
+import '@unocss/reset/tailwind.css'
 import { Provider } from "jotai";
 import AppMode from "@/components/Mode";
 
