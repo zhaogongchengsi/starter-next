@@ -10,18 +10,19 @@ const data: NavBarOptions[] = [
 	{
 		icon: 'i-tabler-3d-cube-sphere',
 		title: '仪表盘',
-		link: '#',
-		children: [
-			{
-				icon: 'i-tabler-3d-cube-sphere',
-				title: '控制台'
-			}
-		]
+		link: '#yibiapan',
 	},
 	{
-		icon: 'i-tabler-3d-cube-sphere',
+		icon: 'i-tabler-users',
 		title: '用户中心',
-		link: '#'
+		link: '/admin',
+		children: [
+			{
+				icon: 'i-tabler-user-cog',
+				title: '用户管理',
+				link: 'user'
+			}
+		]
 	}
 ]
 

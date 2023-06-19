@@ -4,6 +4,7 @@ import React from "react";
 import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import { useAtom } from "jotai";
 import { collapsed } from "./atom";
+import Link from "next/link";
 
 const AdminAside: React.FC = () => {
   const [isCollapsed] = useAtom(collapsed);
@@ -26,6 +27,7 @@ const AdminAside: React.FC = () => {
             },
           },
         }}
+        key="title"
         renderExpandIcon={({ open }) => {
           return (
             <div className={cn("w-5 h-5 i-tabler-arrow-badge-right transition-all", open ? "rotate-90" : "rotate-0")} />
@@ -35,10 +37,10 @@ const AdminAside: React.FC = () => {
         {data.map(({ children, title, link, icon }) => {
           if (children) {
             return (
-              <SubMenu label={title} key={title} icon={<div className={cn("w-5 h-h", icon)} />}>
+              <SubMenu label={title} key={title} icon={<div className={cn("w-5 h-5", icon)} />}>
                 {children.map((child) => {
                   return (
-                    <MenuItem key={child.link} icon={<div className={cn("w-5 h-h", child.icon)} />}>
+                    <MenuItem key={child.title} component={<Link href={[link, child.link].join('/')} />} icon={<div className={cn("w-5 h-5", child.icon)} />}>
                       {child.title}
                     </MenuItem>
                   );
@@ -48,7 +50,7 @@ const AdminAside: React.FC = () => {
           }
           return (
             <>
-              <MenuItem key={link} icon={<div className={cn("w-5 h-h", icon)} />}>
+              <MenuItem key={title} icon={<div className={cn("w-5 h-5", icon)} />}>
                 {title}
               </MenuItem>
             </>
