@@ -2,7 +2,8 @@
 SECRET=RANDOM_STRING
 # 数据库密码
 DATABASE_URL=""
-
+# 数据库代理地址
+DIRECT_URL=""
 # 跟目录
 NEXTAUTH_URL='http://localhost:3000'
 # GitHub oAuth

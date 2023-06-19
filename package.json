@@ -9,6 +9,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start -p 3330",
+    "studio": "prisma studio",
     "seed": "ts-node prisma/seed.ts"
   },
   "dependencies": {
