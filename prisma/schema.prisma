@@ -38,8 +38,6 @@ model UserRole {
   userId     String // relation scalar field (used in the `@relation` attribute above)
   role       Role     @relation(fields: [roleId], references: [id])
   roleId     Int // relation scalar field (used in the `@relation` attribute above)
-  assignedAt DateTime @default(now())
-  assignedBy String
 
   @@id([userId, roleId])
   @@map(name: "user_role")
