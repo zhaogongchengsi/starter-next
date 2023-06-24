@@ -5,60 +5,42 @@ generator client {
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
-}
-
-model Account {
-  id                 Int     @id @default(autoincrement())
-  userId             Int     @map("user_id")
-  type               String
-  provider           String
-  providerAccountId  String  @map("provider_account_id")
-  refresh_token      String?
-  access_token       String?
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?
-  session_state      String?
-  oauth_token_secret String?
-  oauth_token        String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
-  @@map("accounts")
-}
-
-model Session {
-  id           Int      @id @default(autoincrement())
-  sessionToken String   @unique @map("session_token")
-  userId       Int      @map("user_id")
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@map("sessions")
+  // directUrl = env("DIRECT_URL")
 }
 
 model User {
-  id            Int       @id @default(autoincrement())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime? @map("email_verified")
-  image         String?
-  createdAt     DateTime  @default(now()) @map(name: "created_at")
-  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
-  accounts      Account[]
-  sessions      Session[]
+  id        String   @id @default(uuid())
+  name      String?
+  email     String?  @unique
+  phone     String   @unique
+  avatar    String?
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @updatedAt @map(name: "updated_at")
+
+  Roles UserRole[]
 
   @@map(name: "users")
 }
 
-model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
+model Role {
+  id        Int        @id @default(autoincrement())
+  Pid       Int        @map("pid")
+  Title     String     @map("title")
+  createdAt DateTime   @default(now()) @map(name: "created_at")
+  updatedAt DateTime   @updatedAt @map(name: "updated_at")
+  users     UserRole[]
 
-  @@unique([identifier, token])
-  @@map("verificationtokens")
+  @@map(name: "role")
+}
+
+model UserRole {
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String // relation scalar field (used in the `@relation` attribute above)
+  role       Role     @relation(fields: [roleId], references: [id])
+  roleId     Int // relation scalar field (used in the `@relation` attribute above)
+  assignedAt DateTime @default(now())
+  assignedBy String
+
+  @@id([userId, roleId])
+  @@map(name: "user_role")
 }

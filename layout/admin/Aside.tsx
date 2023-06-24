@@ -27,20 +27,24 @@ const AdminAside: React.FC = () => {
             },
           },
         }}
-        key="title"
+        key="id"
         renderExpandIcon={({ open }) => {
           return (
             <div className={cn("w-5 h-5 i-tabler-arrow-badge-right transition-all", open ? "rotate-90" : "rotate-0")} />
           );
         }}
       >
-        {data.map(({ children, title, link, icon }) => {
+        {data.map(({ children, title, link, icon, id }) => {
           if (children) {
             return (
-              <SubMenu label={title} key={title} icon={<div className={cn("w-5 h-5", icon)} />}>
+              <SubMenu label={title} key={id} icon={<div className={cn("w-5 h-5", icon)} />}>
                 {children.map((child) => {
                   return (
-                    <MenuItem key={child.title} component={<Link href={[link, child.link].join('/')} />} icon={<div className={cn("w-5 h-5", child.icon)} />}>
+                    <MenuItem
+                      key={child.id}
+                      component={<Link href={[link, child.link].join("/")} />}
+                      icon={<div className={cn("w-5 h-5", child.icon)} />}
+                    >
                       {child.title}
                     </MenuItem>
                   );
@@ -49,11 +53,9 @@ const AdminAside: React.FC = () => {
             );
           }
           return (
-            <>
-              <MenuItem key={title} icon={<div className={cn("w-5 h-5", icon)} />}>
-                {title}
-              </MenuItem>
-            </>
+            <MenuItem key={id} icon={<div className={cn("w-5 h-5", icon)} />}>
+              {title}
+            </MenuItem>
           );
         })}
       </Menu>

@@ -10,7 +10,9 @@
     "build": "next build",
     "start": "next start -p 3330",
     "studio": "prisma studio",
-    "seed": "ts-node prisma/seed.ts"
+    "seed": "ts-node prisma/seed.ts",
+    "db:mig": "prisma migrate",
+    "db:gen": "prisma generate"
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "1.0.7",
