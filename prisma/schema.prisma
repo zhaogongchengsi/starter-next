@@ -24,22 +24,82 @@ model User {
 }
 
 model Role {
-  id        Int        @id @default(autoincrement())
-  Pid       Int        @map("pid")
-  Title     String     @map("title")
-  createdAt DateTime   @default(now()) @map(name: "created_at")
-  updatedAt DateTime   @updatedAt @map(name: "updated_at")
-  users     UserRole[]
+  id          Int              @id @default(autoincrement())
+  Pid         Int              @map("pid")
+  Title       String           @map("title")
+  createdAt   DateTime         @default(now()) @map(name: "created_at")
+  updatedAt   DateTime         @updatedAt @map(name: "updated_at")
+  users       UserRole[]
+  permissions RolePermission[]
 
   @@map(name: "role")
 }
 
+model Permission {
+  id          Int              @id @default(autoincrement())
+  name        String           @unique
+  description String?
+  // 继承那个父权限
+  parent      Permission?      @relation("ChildPermission", fields: [parentId], references: [id])
+  parentId    Int?
+  // 被哪些权限继承
+  children    Permission[]     @relation("ChildPermission")
+  // 被哪些角色拥有
+  roles       RolePermission[]
+  apis        Api[]
+  pages       Page[]
+
+  @@map(name: "permission")
+}
+
+// 以 pages 目录形成的页面为基础
+model Page {
+  id          Int     @id @default(autoincrement())
+  // 父路径id
+  pid         Int
+  
+  title       String?
+  icon        String?
+  description String?
+  path        String
+
+  Permission   Permission? @relation(fields: [permissionId], references: [id])
+  permissionId Int?        @map("permission_id")
+
+  @@map(name: "page")
+}
+
+model Api {
+  id          Int     @id @default(autoincrement())
+  description String?
+  path        String
+
+  // http 请求的方法集合 get post ... * 表示全通过
+  method       Json
+  Permission   Permission? @relation(fields: [permissionId], references: [id])
+  permissionId Int?        @map("permission_id")
+
+  @@map(name: "api")
+}
+
+// 关联表 关联用户和角色
 model UserRole {
   user   User   @relation(fields: [userId], references: [id])
-  userId String // relation scalar field (used in the `@relation` attribute above)
+  userId String @map("user_id")
   role   Role   @relation(fields: [roleId], references: [id])
-  roleId Int // relation scalar field (used in the `@relation` attribute above)
+  roleId Int    @map("role_id")
 
   @@id([userId, roleId])
   @@map(name: "user_role")
+}
+
+// 关联表 关联角色和权限
+model RolePermission {
+  role         Role       @relation(fields: [roleId], references: [id])
+  roleId       Int        @map("role_id")
+  permission   Permission @relation(fields: [permissionId], references: [id])
+  permissionId Int        @map("permission_id")
+
+  @@id([roleId, permissionId])
+  @@map(name: "role_permission")
 }
