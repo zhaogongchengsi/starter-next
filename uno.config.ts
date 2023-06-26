@@ -13,7 +13,9 @@ import {
 export default defineConfig({
 	shortcuts: [
 		['app-container', 'bg-#ffffff text-#1c1f23 dark:bg-#232429 dark:text-#f9f9f9'],
-		['app-sider-border-t', 'border-t border-gray-400/40 dark:border-gray-200/20']
+		['app-sider-border-t', 'border-t border-gray-400/40 dark:border-gray-200/20'],
+		['text-primary-foreground', 'text-stone-100 dark:text-stone-900'],
+		['app-button', 'bg-slate-900 dark:bg-slate-200 hover:bg-slate-900/90 hover:dark:bg-slate-200/90']
 	],
 	theme: {
 		colors: {
@@ -72,11 +74,11 @@ export default defineConfig({
 		animation: {
 			"accordion-down": "accordion-down 0.2s ease-out",
 			"accordion-up": "accordion-up 0.2s ease-out",
-		},  
+		},
 	},
 	presets: [
-		presetUno({dark: 'class'}),
-		presetAttributify({dark:'class'}),
+		presetUno({ dark: 'class' }),
+		presetAttributify({ dark: 'class' }),
 		presetIcons(),
 		presetTypography(),
 		presetWebFonts({
