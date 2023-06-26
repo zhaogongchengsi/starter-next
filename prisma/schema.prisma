@@ -54,10 +54,10 @@ model Permission {
 
 // 以 pages 目录形成的页面为基础
 model Page {
-  id          Int     @id @default(autoincrement())
+  id  Int @id @default(autoincrement())
   // 父路径id
-  pid         Int
-  
+  pid Int
+
   title       String?
   icon        String?
   description String?
@@ -74,7 +74,7 @@ model Api {
   description String?
   path        String
 
-  // http 请求的方法集合 get post ... * 表示全通过
+  // http 请求的方法集合 GET 、 POST 、 PUT 、 PATCH 、 DELETE 、 HEAD 和 OPTIONS. * 表示全通过
   method       Json
   Permission   Permission? @relation(fields: [permissionId], references: [id])
   permissionId Int?        @map("permission_id")
