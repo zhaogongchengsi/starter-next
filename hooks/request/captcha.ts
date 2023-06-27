@@ -1,6 +1,10 @@
 import { useRequest } from "./request";
 
+interface Captcha {
+	id: string,
+	url: string
+}
 
 export default function useCaptcha() {
-	return useRequest<{ id: string; url: string }>("/api/captcha");
+	return useRequest<Captcha>("/api/captcha", { revalidateOnFocus: false, });
 }

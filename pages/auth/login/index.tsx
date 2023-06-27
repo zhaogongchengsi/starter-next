@@ -8,11 +8,14 @@ import { Button } from "@/components/ui/button";
 import * as z from "zod";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import useCaptcha from "@/hooks/request/captcha";
+import { useSend } from "@/hooks/send";
+import { useMemo } from "react";
+import { account, password, captcha } from "~/schemas/login";
 
 const formSchema = z.object({
-  account: z.string().min(5, { message: "账号长度不小于5位" }).max(15, { message: "账号长度不大于15位" }).trim(),
-  password: z.string().min(6, { message: "密码不小于6位" }).max(16, { message: "密码不大于16位" }).trim(),
-  captcha: z.string().length(4, { message: "验证码必填" }).trim(),
+  account,
+  password,
+  captcha,
 });
 
 const Login = () => {
@@ -21,14 +24,21 @@ const Login = () => {
 
   const { data, isLoading, mutate, error } = useCaptcha();
 
+  const [send] = useSend("/api/user/login");
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
+
+  const img = useMemo(() => {
+    return data?.url || "验证码获取失败,请重试";
+  }, [data, error]);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
+    send(values);
   }
 
   return (
@@ -86,7 +96,7 @@ const Login = () => {
                               {isLoading && !error ? (
                                 <div>加载中</div>
                               ) : (
-                                <div dangerouslySetInnerHTML={{ __html: data?.url || "获取验证码失败，请重试" }}></div>
+                                <div dangerouslySetInnerHTML={{ __html: img }}></div>
                               )}
                             </div>
                           </PopoverContent>
