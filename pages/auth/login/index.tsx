@@ -6,8 +6,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import * as z from "zod";
-import useSWR from "swr";
+// import useSWR from "swr";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { useRequest } from "@/hooks/request/request";
 
 const formSchema = z.object({
   account: z.string().min(5, { message: "账号长度不小于5位" }).max(15, { message: "账号长度不大于15位" }).trim(),
@@ -21,7 +22,7 @@ const Login = () => {
   const [md, smd] = useMode();
   const setMode = () => smd(!md);
 
-  const { data, isLoading, mutate } = useSWR<{ id: string; url: string }>("/api/captcha", fetcher);
+  const { data, isLoading, mutate } = useRequest<{ id: string; url: string }>("/api/captcha", fetcher);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
