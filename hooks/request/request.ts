@@ -13,7 +13,8 @@ function progressMiddleware(useSWRNext) {
 }
 
 
-export const useRequest = <T>(key: Key, fetcher: BareFetcher<T>) => {
+const defaultFetcher = (url: string) => fetch(url).then((res) => res.json());
+export const useRequest = <T>(key: Key, fetcher: BareFetcher<T> = defaultFetcher) => {
 	return useSWR<T>(key, fetcher, {
 		use: [progressMiddleware]
 	});

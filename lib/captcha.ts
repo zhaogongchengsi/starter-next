@@ -8,20 +8,18 @@ import { v4 as uuidv4 } from 'uuid'
 const CleanupInterval = 5
 const scheduler = new ToadScheduler();
 
-// async function deleteCap() {
-// 	const tablenames = await prisma.$queryRaw<
-// 		Array<{ tablename: string }>
-// 	>`SELECT tablename FROM pg_tables WHERE schemaname='public'`
-// }
+export async function clearExpirationTimeCaptcha() {
+	//  await prisma.$queryRaw`DELETE FROM captcha WHERE expiration_time < NOW();`
+	const now = new Date();
+	return await prisma.captcha.deleteMany({
+		where: {
+			expirationTime: { lte: now }
+		}
+	})
+}
 
 const task = new Task('clearCaptcha', () => {
-	// const now = new Date();
-	// prisma.captcha.delete({
-	// 	where: {
-	// 		expirationTime
-	// 	}
-	// })
-	console.log('正在执行清理操作')
+	clearExpirationTimeCaptcha().catch(err => console.log(err))
 });
 
 const clearCaptcha = new SimpleIntervalJob(
@@ -42,15 +40,24 @@ export const options: ConfigObject = {
 export const createSvgCaptcha = async () => {
 	const now = new Date();
 	var captcha = create(options);
-	const later = new Date(now.getTime() + CleanupInterval * 60 * 1000);
+	const fiveMinutesLaterTimestamp = now.getTime() + CleanupInterval * 60 * 1000;
 	const id = uuidv4()
 	await prisma.captcha.create({
 		data: {
 			id,
 			value: captcha.text,
 			data: captcha.data,
-			expirationTime: later
+			expirationTime: new Date(fiveMinutesLaterTimestamp)
 		}
 	})
 	return { id, data: captcha.data }
+}
+
+
+export const deleteCaptcha = async (id: string) => {
+	return await prisma.captcha.deleteMany({
+		where: {
+			id
+		}
+	})
 }

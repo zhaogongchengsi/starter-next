@@ -6,9 +6,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import * as z from "zod";
-// import useSWR from "swr";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { useRequest } from "@/hooks/request/request";
+import useCaptcha from "@/hooks/request/captcha";
 
 const formSchema = z.object({
   account: z.string().min(5, { message: "账号长度不小于5位" }).max(15, { message: "账号长度不大于15位" }).trim(),
@@ -16,13 +15,11 @@ const formSchema = z.object({
   captcha: z.string().length(4, { message: "验证码必填" }).trim(),
 });
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
-
 const Login = () => {
   const [md, smd] = useMode();
   const setMode = () => smd(!md);
 
-  const { data, isLoading, mutate } = useRequest<{ id: string; url: string }>("/api/captcha", fetcher);
+  const { data, isLoading, mutate, error } = useCaptcha();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -86,10 +83,10 @@ const Login = () => {
                           </PopoverTrigger>
                           <PopoverContent className="px-3 w-56 cursor-pointer">
                             <div className="flex flex-col justify-center items-center" onClick={() => mutate()}>
-                              {isLoading ? (
+                              {isLoading && !error ? (
                                 <div>加载中</div>
                               ) : (
-                                <div dangerouslySetInnerHTML={{ __html: data.url }}></div>
+                                <div dangerouslySetInnerHTML={{ __html: data?.url || "获取验证码失败，请重试" }}></div>
                               )}
                             </div>
                           </PopoverContent>

@@ -1,12 +1,29 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
-import { createSvgCaptcha } from '@/lib/captcha'
-
+import { createSvgCaptcha, clearExpirationTimeCaptcha, deleteCaptcha } from '@/lib/captcha'
+import { nextErrorResponse } from "@/lib/error";
 
 const captcha: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse) => {
-	const { data, id } = await createSvgCaptcha()
-	// const base = Buffer.from(data).toString('base64')
-	// const url =`data:image/png;base64,${base}`
-	res.send({ id, url: data })
+
+	try {
+		if (req.method === "DELETE") {
+			const id = req.query['id']
+
+			if (id) {
+				await deleteCaptcha(id as string)
+				res.send({ message: "删除成功" })
+				return
+			}
+
+			const { count } = await clearExpirationTimeCaptcha()
+			res.send({ message: "成功" + count + "条过期验证码" })
+			return
+		}
+
+		const { data, id } = await createSvgCaptcha()
+		res.send({ id, url: data })
+	} catch (err) {
+		res.send(nextErrorResponse('验证码操作失败', err))
+	}
 }
 
 export default captcha
