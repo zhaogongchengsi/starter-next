@@ -103,3 +103,18 @@ model RolePermission {
   @@id([roleId, permissionId])
   @@map(name: "role_permission")
 }
+
+// 用于存储验证码的表 如果有 redis 可以放在 redis 
+model Captcha {
+  id             String   @id @db.Char(36)
+  // 验证码的字
+  value          String
+  // 验证码的图形 svg 格式
+  data           String   @db.Text
+  //  过期时间
+  expirationTime DateTime @map(name: "expiration_time") @db.DateTime
+  // 创建时间
+  createdAt      DateTime @default(now()) @map(name: "created_at")
+
+  @@map(name: "captcha")
+}

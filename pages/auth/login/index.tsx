@@ -2,12 +2,12 @@
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import useMode from "@/hooks/use-mode";
-
-// @ts-ignore
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 import { Button } from "@/components/ui/button";
+import * as z from "zod";
+import useSWR from "swr";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 const formSchema = z.object({
   account: z.string().min(5, { message: "账号长度不小于5位" }).max(15, { message: "账号长度不大于15位" }).trim(),
@@ -15,19 +15,17 @@ const formSchema = z.object({
   captcha: z.string().length(4, { message: "验证码必填" }).trim(),
 });
 
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
 const Login = () => {
   const [md, smd] = useMode();
+  const setMode = () => smd(!md);
 
-  const setMode = () => {
-    smd(!md);
-  };
+  const { data, isLoading, mutate } = useSWR<{ id: string; url: string }>("/api/captcha", fetcher);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
-
-  // const { register } = form;
-  // const inputField = register("inputField", { required: "请输入账号" });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
@@ -79,9 +77,22 @@ const Login = () => {
                   <FormItem>
                     <FormLabel>验证码</FormLabel>
                     <FormControl>
-                      <div className="w-full space-x-2 flex">
-                        <Input type="captcha" placeholder="请输入验证码" {...field} />
-                        <div className="w-40 rounded-md bg-background border border-input cursor-pointer">asd</div>
+                      <div className="w-full space-x-2 flex items-center">
+                        <Input className="" type="captcha" placeholder="请输入验证码" {...field} />
+                        <Popover>
+                          <PopoverTrigger className="w-25 h-8.5 rounded-sm shrink-0 flex items-center cursor-pointer justify-center app-button text-primary-foreground">
+                            <span className="">查看验证码</span>
+                          </PopoverTrigger>
+                          <PopoverContent className="px-3 w-56 cursor-pointer">
+                            <div className="flex flex-col justify-center items-center" onClick={() => mutate()}>
+                              {isLoading ? (
+                                <div>加载中</div>
+                              ) : (
+                                <div dangerouslySetInnerHTML={{ __html: data.url }}></div>
+                              )}
+                            </div>
+                          </PopoverContent>
+                        </Popover>
                       </div>
                     </FormControl>
                     <FormMessage />
