@@ -18,9 +18,25 @@ model User {
   createdAt DateTime @default(now()) @map(name: "created_at")
   updatedAt DateTime @updatedAt @map(name: "updated_at")
 
-  Roles UserRole[]
+  Roles   UserRole[]
+  profile Profile?
 
   @@map(name: "users")
+}
+
+// 用户个人设置
+model Profile {
+  id Int @id @default(autoincrement())
+
+  // light | dark
+  mode String @default("light")
+
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @updatedAt @map(name: "updated_at")
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String   @unique
+
+  @@map(name: "profile")
 }
 
 model Role {
