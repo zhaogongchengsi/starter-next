@@ -35,10 +35,14 @@ const Login = () => {
   }, [data, error]);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-    send(values);
+    send({
+      account: values.account,
+      password: values.password,
+      captcha: {
+        id: data.id,
+        value: values.captcha,
+      },
+    });
   }
 
   return (

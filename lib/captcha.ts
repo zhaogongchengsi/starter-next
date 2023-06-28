@@ -13,7 +13,12 @@ export async function clearExpirationTimeCaptcha() {
 	const now = new Date();
 	return await prisma.captcha.deleteMany({
 		where: {
-			expirationTime: { lte: now }
+			// expirationTime: { lte: now },
+			// isUse: true,
+			OR: [
+				{ expirationTime: { lte: now } },
+				{ isUse: true }
+			]
 		}
 	})
 }
@@ -45,7 +50,7 @@ export const createSvgCaptcha = async () => {
 	await prisma.captcha.create({
 		data: {
 			id,
-			value: captcha.text,
+			value: captcha.text.toLowerCase().trim(),
 			data: captcha.data,
 			expirationTime: new Date(fiveMinutesLaterTimestamp)
 		}
@@ -53,11 +58,37 @@ export const createSvgCaptcha = async () => {
 	return { id, data: captcha.data }
 }
 
-
 export const deleteCaptcha = async (id: string) => {
 	return await prisma.captcha.deleteMany({
 		where: {
 			id
 		}
 	})
+}
+
+export const verifyCaptcha = async (id: string, value: string): Promise<boolean> => {
+
+	const val = await prisma.captcha.findFirst({
+		where: {
+			id,
+			value: value.toLowerCase(),
+			isUse: false
+		}
+	})
+
+	if (!val) {
+		return false
+	}
+
+
+	await prisma.captcha.deleteMany({
+		where: {
+			id,
+		},
+	})
+
+
+	return true
+
+
 }

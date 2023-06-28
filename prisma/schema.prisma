@@ -116,5 +116,7 @@ model Captcha {
   // 创建时间
   createdAt      DateTime @default(now()) @map(name: "created_at")
 
+  isUse Boolean @default(false)
+
   @@map(name: "captcha")
 }
