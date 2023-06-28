@@ -5,6 +5,8 @@ import { account, captcha, password } from "~/schemas/login";
 import { nextErrorResponse, nextResponseWithData } from "@/lib/error";
 import { sendZodErrorMessage } from "@/lib/utils/sendZodError";
 import { verifyCaptcha } from "@/lib/captcha";
+import prisma from '@/lib/prisma'
+import { compareHashAndPassword } from "@/lib/password";
 
 const loginForm = z.object({
 	account,
@@ -33,7 +35,32 @@ const login: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse) 
 		return
 	}
 
-	res.send(nextResponseWithData(data, '登录成功'))
+
+	const user = await prisma.user.findFirst({
+		where: {
+			phone: data.account,
+		}
+	}).catch(err => { res.send(nextErrorResponse("查找用户失败")); return })
+
+	if (!user) {
+		res.send(nextErrorResponse("用户不存在"))
+		return
+	}
+
+
+	if (!compareHashAndPassword(user.password, data.password)) {
+		res.send(nextErrorResponse("密码错误"))
+		return
+	}
+
+	delete user['password']
+
+	const userResult = {
+		user,
+		// todo: token
+	}
+
+	res.send(nextResponseWithData(userResult, '登录成功'))
 
 }
 

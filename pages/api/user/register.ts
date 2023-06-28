@@ -5,6 +5,7 @@ import { account, password } from "~/schemas/login";
 import { sendZodErrorMessage } from "@/lib/utils/sendZodError";
 import { nextErrorResponse, nextResponseWithData } from "@/lib/error";
 import prisma from '@/lib/prisma'
+import { generateFromPassword } from "@/lib/password";
 
 const registerForm = z.object({
 	account,
@@ -37,7 +38,7 @@ const register: NextApiHandler = async (req: NextApiRequest, res: NextApiRespons
 
 	const newUser = await prisma.user.create({
 		data: {
-			password,
+			password: generateFromPassword(password),
 			phone: account
 		}
 	}).catch(err => { res.send(nextErrorResponse(`注册失败，请重试`, err)); return })
