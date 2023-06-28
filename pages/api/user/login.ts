@@ -4,9 +4,10 @@ import { z } from "zod";
 import { account, captcha, password } from "~/schemas/login";
 import { nextErrorResponse, nextResponseWithData } from "@/lib/error";
 import { sendZodErrorMessage } from "@/lib/utils/sendZodError";
-import { verifyCaptcha } from "@/lib/captcha";
 import prisma from '@/lib/prisma'
 import { compareHashAndPassword } from "@/lib/password";
+import { issueToken } from "@/lib/jwt";
+import { verifyCaptcha } from "@/lib/captcha";
 
 const loginForm = z.object({
 	account,
@@ -55,10 +56,10 @@ const login: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse) 
 
 	delete user['password']
 
-	const userResult = {
-		user,
-		// todo: token
-	}
+	const tokenInfo = issueToken(user)
+
+	const userResult = { user, payload: tokenInfo }
+
 
 	res.send(nextResponseWithData(userResult, '登录成功'))
 

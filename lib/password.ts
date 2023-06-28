@@ -4,16 +4,16 @@ import passwordValidator from 'password-validator'
 
 export function getGenerateConfig() {
 	const salt = process.env.SALT
-	const iterations = Number(process.env.ITERATIONS)
-	const keyLength = Number(process.env.KEYLENGTH)
+	const iterations = parseInt(process.env.ITERATIONS)
+	const keyLength = parseInt(process.env.KEYLENGTH)
 	const digest = process.env.DIGEST
 
-	return Object.assign({ salt, iterations, keyLength, digest }, {
+	return Object.assign({
 		salt: 'abcAbcCab',
 		iterations: 500,
 		keyLength: 64,
 		digest: 'sha512'
-	})
+	}, { salt, iterations, keyLength, digest })
 }
 
 export function generateFromPassword(password: string) {
