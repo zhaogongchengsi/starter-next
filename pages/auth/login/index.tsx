@@ -15,6 +15,7 @@ import { ModeToggle } from "@/components/ModeToggle";
 import { useUser } from "@/hooks/logged/use-user";
 import { useJwt } from "@/hooks/logged/use-jwt";
 import { usePermission } from "@/hooks/logged/use-permission";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   account,
@@ -30,6 +31,7 @@ const Login = () => {
   const [_u, setUserInfo] = useUser();
   const [_j, setJwt] = useJwt();
   const [_p, setPerm] = usePermission();
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
@@ -64,11 +66,13 @@ const Login = () => {
         setUserInfo(resp);
         setJwt(resp.payload);
         setPerm(resp);
-
         toast({
           title: "🎉 登陆成功",
           description: `Hello ${resp.name}`,
         });
+
+        // 跳去后台页面
+        router.push("/admin");
       }
     } catch (err) {
       toast({
@@ -111,7 +115,7 @@ const Login = () => {
                   <FormItem>
                     <FormLabel>密码</FormLabel>
                     <FormControl>
-                      <Input type="password" autoComplete="password" placeholder="请输入账号" {...field} />
+                      <Input type="password" autoComplete="password" placeholder="请输入密码" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
