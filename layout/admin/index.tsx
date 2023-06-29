@@ -1,12 +1,12 @@
 import React, { ReactNode } from "react";
 import AdminHeader from "./Header";
 import AdminAside from "./Aside";
+
 type Props = {
   children: ReactNode;
 };
 
 const Layout: React.FC<Props> = (props) => {
-
   return (
     <section className="w-full h-screen flex app-container">
       <AdminAside />

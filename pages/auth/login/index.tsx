@@ -1,16 +1,17 @@
 "use client";
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import useMode from "@/hooks/use-mode";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import * as z from "zod";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import useCaptcha from "@/hooks/request/captcha";
-import { useSend } from "@/hooks/send";
-import { useMemo } from "react";
+import { useSend } from "@/hooks/use-send";
+import { useMemo, useState } from "react";
 import { account, password, captcha } from "~/schemas/login";
+import { useToast } from "@/components/ui/use-toast";
+import { ModeToggle } from "@/components/ModeToggle";
 
 const formSchema = z.object({
   account,
@@ -19,12 +20,10 @@ const formSchema = z.object({
 });
 
 const Login = () => {
-  const [md, smd] = useMode();
-  const setMode = () => smd(!md);
-
+  const { toast } = useToast();
+  const [isLoginLoading, setLoginLoading] = useState(false);
   const { data, isLoading, mutate, error } = useCaptcha();
-
-  const [send] = useSend("/api/user/login");
+  const [send] = useSend<{ user: string }>("/api/user/login", 100000);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -34,23 +33,50 @@ const Login = () => {
     return data?.url || "验证码获取失败,请重试";
   }, [data, error]);
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    send({
-      account: values.account,
-      password: values.password,
-      captcha: {
-        id: data.id,
-        value: values.captcha,
-      },
-    });
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setLoginLoading(true);
+    try {
+      const {
+        state,
+        message,
+        data: resp,
+      } = await send({
+        account: values.account,
+        password: values.password,
+        captcha: {
+          id: data.id,
+          value: values.captcha,
+        },
+      });
+
+      if (!state) {
+        toast({
+          variant: "destructive",
+          title: "登录失败",
+          description: message,
+        });
+      } else {
+        toast({
+          description: message,
+        });
+      }
+    } catch (err) {
+      toast({
+        variant: "destructive",
+        title: "登录失败",
+        description: String(err),
+      });
+    } finally {
+      setLoginLoading(false);
+    }
   }
 
   return (
     <section className="w-full h-screen app-container flex min-w-300">
       <div className="flex-1 h-full border-r border-stone-300 dark:border-gray-100/30">1</div>
-      <div className="w-250 h-full flex items-center justify-center">
+      <div className="w-250 h-full flex items-center justify-center relative">
         <div className="flex justify-end absolute w-full top-10 right-10">
-          <div onClick={setMode} className="w-8 h-8 i-tabler-sun dark:i-tabler-moon" />
+          <ModeToggle />
         </div>
         <div className="w-150 p-5">
           <Form {...form}>
@@ -112,8 +138,13 @@ const Login = () => {
                 )}
               />
 
-              <Button className="w-full" type="submit">
-                登录
+              <Button className="w-full space-x-2 flex items-center" type="submit">
+                {isLoginLoading ? (
+                  <div className="w-5 h-5 animate-spin i-tabler-brand-walmart" />
+                ) : (
+                  <div className="w-5 h-5 i-tabler-login" />
+                )}
+                <span>登录</span>
               </Button>
             </form>
           </Form>

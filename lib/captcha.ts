@@ -90,5 +90,4 @@ export const verifyCaptcha = async (id: string, value: string): Promise<boolean>
 
 	return true
 
-
 }

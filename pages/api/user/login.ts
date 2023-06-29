@@ -27,6 +27,7 @@ type Permissions = (Permission & {
 const login: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 	const result = await loginForm.spa(req.body)
+
 	if (!result.success) {
 		const err = (result as any).error
 		const message = sendZodErrorMessage(err)
@@ -62,9 +63,7 @@ const login: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse) 
 	const permissionArr: Permissions = []
 	user.Roles.forEach(r => {
 		const { id, Pid, Title, createdAt, updatedAt, permissions } = r.role
-		permissions.forEach(p => {
-			return permissionArr.push(p.permission);
-		})
+		permissions.forEach(p => { permissionArr.push(p.permission); })
 		roles.push({ id, Pid, Title, createdAt, updatedAt, })
 	});
 
@@ -72,7 +71,8 @@ const login: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse) 
 
 	const userResult = { ...pureUser, roles, permissions: permissionArr, payload: tokenInfo, profile: user.profile }
 
-	res.send(nextResponseWithData(userResult, '登录成功'))
+
+	res.json(nextResponseWithData(userResult, '登录成功'))
 
 }
 
