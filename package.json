@@ -10,7 +10,7 @@
     "build": "next build",
     "start": "next start -p 3330",
     "db:studio": "prisma studio",
-    "db:seed": "ts-node prisma/seed.ts",
+    "db:seed": "esno prisma/seed.ts",
     "db:mig": "prisma migrate",
     "db:gen": "prisma generate",
     "db:push": "prisma db push"
@@ -29,8 +29,10 @@
     "@unocss/reset": "^0.53.1",
     "class-variance-authority": "^0.6.0",
     "clsx": "^1.2.1",
+    "flat-to-nested": "^1.1.1",
     "jotai": "^2.2.0",
     "jsonwebtoken": "^9.0.0",
+    "lodash": "^4.17.21",
     "lucide-react": "^0.244.0",
     "next": "13.3.1",
     "next-auth": "4.22.1",
@@ -56,21 +58,21 @@
   "devDependencies": {
     "@iconify-json/tabler": "^1.1.79",
     "@types/jsonwebtoken": "^9.0.2",
+    "@types/lodash": "^4.14.195",
     "@types/next-auth": "3.13.0",
-    "@types/node": "18.16.18",
     "@types/nprogress": "^0.2.0",
     "@types/react": "18.2.12",
     "@unocss/postcss": "^0.53.1",
     "autoprefixer": "^10.4.14",
     "concurrently": "^8.2.0",
+    "esno": "^0.16.3",
     "postcss": "^8.4.24",
     "prisma": "4.15.0",
     "tailwindcss": "^3.3.2",
-    "ts-node": "10.9.1",
     "typescript": "4.9.5",
     "unocss": "^0.53.1"
   },
   "prisma": {
-    "seed": "ts-node prisma/seed.ts"
+    "seed": "esno prisma/seed.ts"
   }
 }

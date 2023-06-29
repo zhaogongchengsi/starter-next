@@ -12,6 +12,9 @@ import { useMemo, useState } from "react";
 import { account, password, captcha } from "~/schemas/login";
 import { useToast } from "@/components/ui/use-toast";
 import { ModeToggle } from "@/components/ModeToggle";
+import { useUser } from "@/hooks/logged/use-user";
+import { useJwt } from "@/hooks/logged/use-jwt";
+import { usePermission } from "@/hooks/logged/use-permission";
 
 const formSchema = z.object({
   account,
@@ -23,8 +26,10 @@ const Login = () => {
   const { toast } = useToast();
   const [isLoginLoading, setLoginLoading] = useState(false);
   const { data, isLoading, mutate, error } = useCaptcha();
-  const [send] = useSend<{ user: string }>("/api/user/login", 100000);
-
+  const [send] = useSend<UserResponse>("/api/user/login", 100000);
+  const [_u, setUserInfo] = useUser();
+  const [_j, setJwt] = useJwt();
+  const [_p, setPerm] = usePermission();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
@@ -52,12 +57,17 @@ const Login = () => {
       if (!state) {
         toast({
           variant: "destructive",
-          title: "登录失败",
+          title: "🚨 登录失败",
           description: message,
         });
       } else {
+        setUserInfo(resp);
+        setJwt(resp.payload);
+        setPerm(resp);
+
         toast({
-          description: message,
+          title: "🎉 登陆成功",
+          description: `Hello ${resp.name}`,
         });
       }
     } catch (err) {

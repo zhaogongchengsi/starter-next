@@ -9,6 +9,7 @@ import { compareHashAndPassword } from "@/lib/password";
 import { issueToken } from "@/lib/jwt";
 import { Role, User, Permission, Api, Page } from "@prisma/client";
 import { verifyCaptcha } from "@/lib/captcha";
+import omit from 'lodash/omit'
 
 const loginForm = z.object({
 	account,
@@ -58,7 +59,7 @@ const login: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse) 
 	}
 
 	// 将数据简单整理一波
-	const pureUser = copyRespondUser(user)
+	const pureUser = omit(user, ['password', "Roles"])
 	const roles: Role[] = []
 	const permissionArr: Permissions = []
 	user.Roles.forEach(r => {

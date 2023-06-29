@@ -1,18 +1,10 @@
 
 
-export interface SendResponse<T> {
-	data: T,
-	message: string,
-	error?: string,
-	doc?: string,
-	state: 1 | 0
-}
-
 const timeoutFunc = (timeout = 5000) => new Promise((_, reject) => {
 	setTimeout(() => reject(new Error("Request timed out (请求超时)")), timeout);
 })
 
-export function useSend<T>(url: string, timeout = 5000): [send: (body: any, init?: RequestInit) => Promise<SendResponse<T>>, stop: () => void] {
+export function useSend<T>(url: string, timeout = 5000): [send: (body: any, init?: RequestInit) => Promise<ResponseModel<T>>, stop: () => void] {
 	const controller = new AbortController();
 	const signal = controller.signal;
 
@@ -26,9 +18,9 @@ export function useSend<T>(url: string, timeout = 5000): [send: (body: any, init
 	// Authorization: 'Bearer xxxxxxxx'
 	// Cache-Control: 'no-cache'
 
-	const send = (body: any, init?: RequestInit): Promise<SendResponse<T>> => {
+	const send = (body: any, init?: RequestInit): Promise<ResponseModel<T>> => {
 
-		return new Promise<SendResponse<T>>((resolve, reject) => {
+		return new Promise<ResponseModel<T>>((resolve, reject) => {
 			Promise.race([
 				fetch(url, {
 					method: "POST",

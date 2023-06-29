@@ -1,13 +1,10 @@
 import { useAtom } from "jotai";
 import { collapsed } from "./atom";
 import { cn } from "@/lib/utils";
-import { useTheme } from "next-themes";
 import { ModeToggle } from "@/components/ModeToggle";
 
 const AdminHeader = () => {
   const [isCollapsed, setIsCollapsed] = useAtom(collapsed);
-
-  const { setTheme } = useTheme();
 
   const onCollapsedBtn = () => {
     setIsCollapsed(!isCollapsed);

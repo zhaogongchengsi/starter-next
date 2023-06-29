@@ -7,6 +7,5 @@
 - [自定义侧边栏](https://github.com/azouaoui-med/react-pro-sidebar)
 - [react-hook-form](https://react-hook-form.com/docs/useform/resetfield)
 - [swr](https://swr.vercel.app/docs/getting-started)
-
-
--[svg-captcha](https://github.com/produck/svg-captcha/blob/1.x/README_CN.md)
+- [jotai](https://jotai.org/docs/core/use-atom)
+- [svg-captcha](https://github.com/produck/svg-captcha/blob/1.x/README_CN.md)
