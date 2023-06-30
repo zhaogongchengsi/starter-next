@@ -1,4 +1,4 @@
-<h1 align-center style="text-align: center;">Next.js Blueprint</h1>
+<h1 align-center >Next.js Blueprint</h1>
 
 <p align-center style="text-align: center;">
 	<img style="width: 100px" src="https://s2.loli.net/2023/06/30/v7ocKObR8NkTmiM.png" />
