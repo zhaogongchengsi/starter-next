@@ -23,12 +23,11 @@ const userData: Prisma.UserCreateInput[] = [
                     permission: {
                       create: {
                         name: "超级权限",
-                        pages: {
+                        menus: {
                           create: [
-                            { path: "admin", pid: 0, title: "管理员", description: "一般叫做后台管理页面" },
-                            { path: "index", pid: 1, title: "控制台", icon: 'i-tabler-3d-cube-sphere', description: "后台管理的首页 一般为控制台" },
-                            { path: "user", pid: 1, title: "用户中心", icon: 'i-tabler-users', description: "用户中心" },
-                            { path: "index", pid: 3, title: "用户管理", icon: 'i-tabler-user-cog', description: "用户管理的默认页面" },
+                            { path: "index", pid: 0, title: "控制台", icon: 'i-tabler-3d-cube-sphere', description: "后台管理的首页 一般为控制台" },
+                            { path: "user", pid: 0, title: "用户中心", icon: 'i-tabler-users', description: "用户中心" },
+                            { path: "index", pid: 2, title: "用户管理", icon: 'i-tabler-user-cog', description: "用户管理的默认页面" },
                           ]
                         },
                       }
@@ -73,5 +72,5 @@ main()
   .catch(async (e) => {
     console.error(e)
     await prisma.$disconnect()
-    // process.exit(1)
+    process.exit(1)
   })

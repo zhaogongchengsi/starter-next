@@ -63,13 +63,13 @@ model Permission {
   // 被哪些角色拥有
   roles       RolePermission[]
   apis        Api[]
-  pages       Page[]
+  menus       Menu[]
 
   @@map(name: "permission")
 }
 
 // 以 pages 目录形成的页面为基础
-model Page {
+model Menu {
   id  Int @id @default(autoincrement())
   // 父路径id
   pid Int
@@ -82,7 +82,7 @@ model Page {
   Permission   Permission? @relation(fields: [permissionId], references: [id])
   permissionId Int?        @map("permission_id")
 
-  @@map(name: "page")
+  @@map(name: "menu")
 }
 
 model Api {
