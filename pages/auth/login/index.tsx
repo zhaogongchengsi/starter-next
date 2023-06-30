@@ -39,7 +39,7 @@ const Login = () => {
 
   const img = useMemo(() => {
     return data?.url || "验证码获取失败,请重试";
-  }, [data, error]);
+  }, [data]);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setLoginLoading(true);

@@ -7,7 +7,7 @@ import { sendZodErrorMessage } from "@/lib/utils/sendZodError";
 import prisma from '@/lib/prisma'
 import { compareHashAndPassword } from "@/lib/password";
 import { issueToken } from "@/lib/jwt";
-import { Role, User, Permission, Api, Page } from "@prisma/client";
+import { Role, Permission, Api, Menu } from "@prisma/client";
 import { verifyCaptcha } from "@/lib/captcha";
 import omit from 'lodash/omit'
 
@@ -22,7 +22,7 @@ const loginForm = z.object({
 
 type Permissions = (Permission & {
 	apis: Api[];
-	pages: Page[];
+	menus: Menu[];
 })[]
 
 const login: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -93,7 +93,7 @@ async function findFirstUser(account: string) {
 									permission: {
 										include: {
 											apis: true,
-											pages: true,
+											menus: true,
 										}
 									}
 								}
@@ -106,10 +106,6 @@ async function findFirstUser(account: string) {
 	})
 }
 
-function copyRespondUser(user: User) {
-	const { avatar, id, updatedAt, createdAt, name, phone } = user
-	return { avatar, id, updatedAt, createdAt, name, phone }
-}
 
 
 export default Post(login)

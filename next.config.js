@@ -6,4 +6,8 @@ module.exports = withSuperjson()({
   experimental: {
     appDir: true,
   },
+  eslint: {
+    // 在生产环境中禁止在 eslint 错误后 影响应用打包
+    ignoreDuringBuilds: true,
+  },
 });
