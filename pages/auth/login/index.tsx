@@ -89,7 +89,6 @@ const Login = () => {
   return (
     <section className="w-full h-screen app-container flex min-w-300">
       <Head>
-        <title>后台管理</title>
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
       </Head>

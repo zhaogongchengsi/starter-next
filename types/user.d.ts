@@ -1,5 +1,3 @@
-
-
 interface UserResponse {
 	avatar: null;
 	createdAt: string;
@@ -26,18 +24,19 @@ interface Permission {
 	description?: null;
 	id?: number;
 	name?: string;
-	pages?: Page[];
+	menus?: Menu[];
 	parentId?: null;
 }
 
-interface Page {
-	description: string;
-	icon: null | string;
+interface Menu {
+	description?: string;
+	icon?: null | string;
 	id: number;
 	path: string;
 	permissionId: number;
 	pid: number;
 	title: string;
+
 }
 
 interface Role {
@@ -48,6 +47,6 @@ interface Role {
 	updatedAt: string;
 }
 
-interface Menu extends Page {
-	children?: Page[]
+interface Menu {
+	children?: Menu[]
 }

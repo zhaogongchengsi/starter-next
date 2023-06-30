@@ -1,15 +1,13 @@
 import { ConfigObject, create } from 'svg-captcha'
 import { ToadScheduler, SimpleIntervalJob, Task } from 'toad-scheduler';
 import prisma from './prisma'
-
-// @ts-ignore
 import { v4 as uuidv4 } from 'uuid'
+
 // 五分钟执行一次清理过期验证码
 const CleanupInterval = 5
 const scheduler = new ToadScheduler();
 
 export async function clearExpirationTimeCaptcha() {
-	//  await prisma.$queryRaw`DELETE FROM captcha WHERE expiration_time < NOW();`
 	const now = new Date();
 	return await prisma.captcha.deleteMany({
 		where: {
@@ -24,7 +22,7 @@ export async function clearExpirationTimeCaptcha() {
 }
 
 const task = new Task('clearCaptcha', () => {
-	clearExpirationTimeCaptcha().catch(err => console.log(err))
+	clearExpirationTimeCaptcha().catch(err => console.error(err))
 });
 
 const clearCaptcha = new SimpleIntervalJob(
