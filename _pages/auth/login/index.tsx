@@ -16,7 +16,6 @@ import { useUser } from "@/hooks/logged/use-user";
 import { useJwt } from "@/hooks/logged/use-jwt";
 import { usePermission } from "@/hooks/logged/use-permission";
 import { useRouter } from "next/navigation";
-import Head from "next/head";
 
 const formSchema = z.object({
   account,
@@ -52,7 +51,7 @@ const Login = () => {
         account: values.account,
         password: values.password,
         captcha: {
-          id: data?.id,
+          id: data.id,
           value: values.captcha,
         },
       });
@@ -88,11 +87,6 @@ const Login = () => {
 
   return (
     <section className="w-full h-screen app-container flex min-w-300">
-      <Head>
-        <title>后台管理</title>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-      </Head>
       <div className="flex-1 h-full border-r border-stone-300 dark:border-gray-100/30">1</div>
       <div className="w-250 h-full flex items-center justify-center relative">
         <div className="flex justify-end absolute w-full top-10 right-10">
