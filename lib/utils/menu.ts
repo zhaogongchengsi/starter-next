@@ -12,6 +12,7 @@ export function buildPages(menus: Menu[]): Menu[] {
 			if (menu.pid !== pMenu.id) {
 				continue
 			}
+
 			children.push(toTree(children, menu))
 		}
 

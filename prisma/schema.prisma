@@ -68,7 +68,13 @@ model Permission {
   @@map(name: "permission")
 }
 
-// 以 pages 目录形成的页面为基础
+// menu 为后端左侧菜单栏 一般为pages/admin为主 例子:
+// |--admin/index -> path: admin/
+// |--admin/user -> path: admin/user
+// |--admin/user/index -> path: admin/user
+// |--admin/user/about -> path: admin/user/about
+// index 为默认，可以忽略
+// 需要从 admin 触发
 model Menu {
   id  Int @id @default(autoincrement())
   // 父路径id

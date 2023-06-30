@@ -74,17 +74,15 @@ export const verifyCaptcha = async (id: string, value: string): Promise<boolean>
 		}
 	})
 
-	if (!val) {
-		return false
-	}
-
-
 	await prisma.captcha.deleteMany({
 		where: {
 			id,
 		},
 	})
 
+	if (!val) {
+		return false
+	}
 
 	return true
 

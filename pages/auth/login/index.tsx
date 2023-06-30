@@ -67,6 +67,8 @@ const Login = () => {
         setUserInfo(resp);
         setJwt(resp.payload);
         setPerm(resp);
+
+
         toast({
           title: "🎉 登陆成功",
           description: `Hello ${resp.name}`,

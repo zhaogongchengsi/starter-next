@@ -1,13 +1,19 @@
-import { cn } from "@/lib/utils";
-import data from "./data";
+"use client";
+
 import React from "react";
-import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
+import { Sidebar } from "react-pro-sidebar";
 import { useAtom } from "jotai";
 import { collapsed } from "./atom";
-import Link from "next/link";
+import { usePermission } from "@/hooks/logged/use-permission";
+import { AsideMenu } from "./Menu";
 
-const AdminAside: React.FC = () => {
+interface AdminAsideProps {
+  baseUrl?: string;
+}
+
+const AdminAside: React.FC<AdminAsideProps> = ({ baseUrl }) => {
   const [isCollapsed] = useAtom(collapsed);
+  const [pres] = usePermission();
 
   return (
     <Sidebar
@@ -17,48 +23,7 @@ const AdminAside: React.FC = () => {
       backgroundColor="var(--app-background)"
       collapsed={isCollapsed}
     >
-      <Menu
-        menuItemStyles={{
-          button: {
-            background: "var(--app-background)",
-            "&:hover": {
-              backgroundColor: "var(--app-background-hover)",
-              color: "var(--app-foreground-hover)",
-            },
-          },
-        }}
-        key="id"
-        renderExpandIcon={({ open }) => {
-          return (
-            <div className={cn("w-5 h-5 i-tabler-arrow-badge-right transition-all", open ? "rotate-90" : "rotate-0")} />
-          );
-        }}
-      >
-        {data.map(({ children, title, link, icon, id }) => {
-          if (children) {
-            return (
-              <SubMenu label={title} key={id} icon={<div className={cn("w-5 h-5", icon)} />}>
-                {children.map((child) => {
-                  return (
-                    <MenuItem
-                      key={child.id}
-                      component={<Link href={[link, child.link].join("/")} />}
-                      icon={<div className={cn("w-5 h-5", child.icon)} />}
-                    >
-                      {child.title}
-                    </MenuItem>
-                  );
-                })}
-              </SubMenu>
-            );
-          }
-          return (
-            <MenuItem key={id} icon={<div className={cn("w-5 h-5", icon)} />}>
-              {title}
-            </MenuItem>
-          );
-        })}
-      </Menu>
+      <AsideMenu Menus={pres.menu} baseUrl={baseUrl} />
     </Sidebar>
   );
 };

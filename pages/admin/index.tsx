@@ -5,10 +5,8 @@ interface Props {}
 
 const Admin: React.FC<Props> = (props) => {
   return (
-    <Layout>
-      <div>
-        123
-      </div>
+    <Layout baseUrl="admin">
+      <div>123</div>
     </Layout>
   );
 };

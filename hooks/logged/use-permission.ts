@@ -12,9 +12,9 @@ const pagesAtom = atomWithStorage<Menu[]>(APP_PAGE_STORAGE_KEY, [])
 const permissionsAtom = atomWithStorage<Permission[]>(APP_PRES_STORAGE_KEY, {} as any)
 
 
-export const usePermission = (): [{ roles: Role[], pages: Menu[], permissions: Permission[] }, (user: UserResponse) => void] => {
+export const usePermission = (): [{ roles: Role[], menu: Menu[], permissions: Permission[] }, (user: UserResponse) => void] => {
 	const [roles, setRole] = useAtom(rolesAtom)
-	const [pages, setPages] = useAtom(pagesAtom)
+	const [menu, setPages] = useAtom(pagesAtom)
 	const [pres, setPres] = useAtom(permissionsAtom)
 
 	const setPermissions = (user: UserResponse) => {
@@ -27,10 +27,10 @@ export const usePermission = (): [{ roles: Role[], pages: Menu[], permissions: P
 			return [...result, ...items || []];
 		}, [] as Menu[]);
 
-		const pages = buildPages(menuItems)
+		const menus = buildPages(menuItems)
 
-		setPages(pages)
+		setPages(menus)
 	}
 
-	return [{ roles, pages, permissions: pres }, setPermissions]
+	return [{ roles, menu, permissions: pres }, setPermissions]
 }

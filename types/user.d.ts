@@ -36,7 +36,6 @@ interface Menu {
 	permissionId: number;
 	pid: number;
 	title: string;
-
 }
 
 interface Role {

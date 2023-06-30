@@ -25,9 +25,9 @@ const userData: Prisma.UserCreateInput[] = [
                         name: "超级权限",
                         menus: {
                           create: [
-                            { path: "index", pid: 0, title: "控制台", icon: 'i-tabler-3d-cube-sphere', description: "后台管理的首页 一般为控制台" },
-                            { path: "user", pid: 0, title: "用户中心", icon: 'i-tabler-users', description: "用户中心" },
-                            { path: "index", pid: 2, title: "用户管理", icon: 'i-tabler-user-cog', description: "用户管理的默认页面" },
+                            { path: "admin", pid: 0, title: "控制台", icon: 'i-tabler-3d-cube-sphere', description: "后台管理的首页 一般为控制台" },
+                            { path: "admin/user", pid: 0, title: "用户中心", icon: 'i-tabler-users', description: "用户中心" },
+                            { path: "admin/user", pid: 2, title: "用户管理", icon: 'i-tabler-user-cog', description: "用户管理的默认页面" },
                           ]
                         },
                       }
