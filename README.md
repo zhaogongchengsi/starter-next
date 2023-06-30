@@ -1,5 +1,11 @@
+<h1 align-center style="text-align: center;">Next.js Blueprint</h1>
 
-## 本系统用过的库
+<p align-center style="text-align: center;">
+	<img style="width: 100px" src="https://s2.loli.net/2023/06/30/v7ocKObR8NkTmiM.png" />
+</p>
+
+### 本系统用过的库
+
 - [unocss](https://unocss.org/)
 - [next](https://nextjs.org/)
 - [ui shadcn](https://ui.shadcn.com/docs/installation)
