@@ -6,6 +6,8 @@ import { useAtom } from "jotai";
 import { collapsed } from "./atom";
 import { usePermission } from "@/hooks/logged/use-permission";
 import { AsideMenu } from "./Menu";
+import HeaderLogo from "./Logo";
+import AsideFooter from "./AsideFooter/Footer";
 
 interface AdminAsideProps {
   baseUrl?: string;
@@ -17,13 +19,16 @@ const AdminAside: React.FC<AdminAsideProps> = ({ baseUrl }) => {
 
   return (
     <Sidebar
+      className="h-full"
       rootStyles={{
         color: "var(--app-foreground)",
       }}
       backgroundColor="var(--app-background)"
       collapsed={isCollapsed}
     >
+      <HeaderLogo />
       <AsideMenu Menus={pres.menu} baseUrl={baseUrl} />
+      <AsideFooter />
     </Sidebar>
   );
 };

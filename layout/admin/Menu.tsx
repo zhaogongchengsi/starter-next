@@ -2,14 +2,11 @@
 
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import React, { createContext, useContext } from "react";
 import { Menu as SideMenu, MenuItem, SubMenu } from "react-pro-sidebar";
 
 interface AsideMenuContext {
   baseUrl?: string;
 }
-
-const MenuContext = createContext<AsideMenuContext | null>(null);
 
 interface AsideMenuProps extends AsideMenuContext {
   Menus: Menu[];
@@ -40,7 +37,7 @@ const AsideMenuItem: React.FC<AsideMenuItemProps> = ({ menu }) => {
   );
 };
 
-const AsideMenu: React.FC<AsideMenuProps> = ({ Menus, baseUrl }) => {
+const AsideMenu: React.FC<AsideMenuProps> = ({ Menus }) => {
   return (
     <SideMenu
       menuItemStyles={{
@@ -52,6 +49,9 @@ const AsideMenu: React.FC<AsideMenuProps> = ({ Menus, baseUrl }) => {
           },
         },
       }}
+      rootStyles={{
+        height: "calc(100% - var(--admin-aside-footer-height) - var(--admin-aside-header-height))",
+      }}
       key="id"
       renderExpandIcon={({ open }) => {
         return (
@@ -59,11 +59,9 @@ const AsideMenu: React.FC<AsideMenuProps> = ({ Menus, baseUrl }) => {
         );
       }}
     >
-      <MenuContext.Provider value={{ baseUrl: baseUrl }}>
-        {Menus.map((menu) => {
-          return <AsideMenuItem key={menu.id} menu={menu} />;
-        })}
-      </MenuContext.Provider>
+      {Menus.map((menu) => {
+        return <AsideMenuItem key={menu.id} menu={menu} />;
+      })}
     </SideMenu>
   );
 };

@@ -1,6 +1,10 @@
 :root {
 	--admin-header-height: 60px;
 	--nprogress-color: #29d;
+
+	/* 管理后台侧边栏高度 */
+	--admin-aside-header-height: 90px;
+	--admin-aside-footer-height: 100px;
 }
 
 .admin-main-box {
@@ -55,7 +59,7 @@
 	border-top-color: var(--nprogress-color);
 	border-left-color: var(--nprogress-color);
 	border-radius: 50%;
-	
+
 	-webkit-animation: nprogress-spinner 400ms linear infinite;
 	animation: nprogress-spinner 400ms linear infinite;
 }
