@@ -29,10 +29,13 @@ export function useSend<T>(url: string, timeout = 5000): [send: (body: any, init
 					signal,
 					headers
 				}),
+				// todo: 登录超时限制无效
 				timeoutFunc(timeout),
 			]).then((value: Response) => {
+				console.log(value.json())
 				resolve(value.json() as any)
 			}).catch((err) => {
+				console.log('err', err)
 				reject(err)
 			})
 		})
