@@ -1,30 +1,36 @@
 
-import { pbkdf2Sync } from 'crypto'
+import { timingSafeEqual } from 'crypto'
 import passwordValidator from 'password-validator'
+import CryptoJS from 'crypto-js';
 
 export function getGenerateConfig() {
-	const salt = process.env.SALT
-	const iterations = parseInt(process.env.ITERATIONS || "500")
+	const salt = process.env.SALT || "asdhaosidhasiohdaiogergh213!@asdj"
+	const iterations = parseInt(process.env.ITERATIONS || "100")
 	const keyLength = parseInt(process.env.KEYLENGTH || "64")
-	const digest = process.env.DIGEST
 
 	return Object.assign({
 		salt: 'abcAbcCab',
 		iterations: 500,
 		keyLength: 64,
-		digest: 'sha512'
-	}, { salt, iterations, keyLength, digest })
+	}, { salt, iterations, keyLength })
 }
 
 export function generateFromPassword(password: string) {
-	const { salt, iterations, keyLength, digest } = getGenerateConfig()
-	const newKey = pbkdf2Sync(password, salt, iterations, keyLength, digest).toString('hex');
-	return newKey
+	const { salt, iterations, keyLength } = getGenerateConfig()
+	const key =  CryptoJS.PBKDF2(password, salt, {
+		keySize: keyLength,
+		iterations: iterations
+	});
+	return key.toString(CryptoJS.enc.Hex)
 }
 
 export function compareHashAndPassword(hash: string, password: string) {
 	const pas = generateFromPassword(password)
-	return hash === pas
+
+	const buffer_hash = Buffer.from(hash, 'hex');
+	const buffer_password = Buffer.from(pas, 'hex');
+
+	return timingSafeEqual(buffer_hash, buffer_password);
 }
 
 

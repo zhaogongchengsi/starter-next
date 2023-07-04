@@ -5,7 +5,7 @@ export function getJwtConfig() {
 	const issuer = process.env.ISSUER
 	const jwtSalt = process.env.JWT_SALT
 
-	return Object.assign({ expiresIn: '30', issuer: "app_abc", jwtSalt: 'abcAbcAbc123' }, { expiresIn, issuer, jwtSalt })
+	return Object.assign({ expiresIn, issuer, jwtSalt }, { expiresIn: '30', issuer: "app_abc", jwtSalt: 'abcAbcAbc123' })
 }
 
 export function issueToken(payload: string | object) {

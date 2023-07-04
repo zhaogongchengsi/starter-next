@@ -4,12 +4,14 @@ import { PrismaClient, Prisma } from '@prisma/client'
 const prisma = new PrismaClient()
 
 
+const pws = generateFromPassword('123456')
+
 const userData: Prisma.UserCreateInput[] = [
   {
     name: 'Admin',
     email: '123456789@qq.io',
     phone: '12345678901',
-    password: generateFromPassword('123456'),
+    password:pws,
     Roles: {
       create: [
         {
