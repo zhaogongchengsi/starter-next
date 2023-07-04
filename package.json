@@ -30,6 +30,7 @@
     "@unocss/reset": "^0.53.1",
     "class-variance-authority": "^0.6.0",
     "clsx": "^1.2.1",
+    "crypto-js": "^4.1.1",
     "flat-to-nested": "^1.1.1",
     "jotai": "^2.2.0",
     "jsonwebtoken": "^9.0.0",

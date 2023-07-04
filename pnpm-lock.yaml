@@ -44,6 +44,9 @@ dependencies:
   clsx:
     specifier: ^1.2.1
     version: 1.2.1
+  crypto-js:
+    specifier: ^4.1.1
+    version: 4.1.1
   flat-to-nested:
     specifier: ^1.1.1
     version: 1.1.1
@@ -2754,6 +2757,10 @@ packages:
       shebang-command: 2.0.0
       which: 2.0.2
     dev: true
+
+  /crypto-js@4.1.1:
+    resolution: {integrity: sha512-o2JlM7ydqd3Qk9CA0L4NL6mTzU2sdx96a+oOfPu8Mkl/PK51vSyoi8/rQ8NknZtk44vq15lmhAj9CIAGwgeWKw==}
+    dev: false
 
   /css-tree@2.3.1:
     resolution: {integrity: sha512-6Fv1DV/TYw//QF5IzQdqsNDjx/wc8TrMBZsqjL9eW01tWb7R7k/mq+/VXfJCl7SoD5emsJop9cOByJZfs8hYIw==}
