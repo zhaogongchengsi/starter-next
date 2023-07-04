@@ -6,13 +6,13 @@ import CryptoJS from 'crypto-js';
 export function getGenerateConfig() {
 	const salt = process.env.SALT || "asdhaosidhasiohdaiogergh213!@asdj"
 	const iterations = parseInt(process.env.ITERATIONS || "100")
-	const keyLength = parseInt(process.env.KEYLENGTH || "64")
+	const keyLength = parseInt(process.env.KEYLENGTH || "10")
 
-	return Object.assign({
+	return Object.assign({ salt, iterations, keyLength },{
 		salt: 'abcAbcCab',
 		iterations: 500,
 		keyLength: 64,
-	}, { salt, iterations, keyLength })
+	})
 }
 
 export function generateFromPassword(password: string) {
