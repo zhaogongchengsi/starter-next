@@ -20,6 +20,7 @@ model User {
 
   Roles   UserRole[]
   profile Profile?
+  Article Article[]
 
   @@map(name: "users")
 }
@@ -39,6 +40,41 @@ model Profile {
   @@map(name: "profile")
 }
 
+// 文章表
+model Article {
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now()) @map(name: "created_at")
+  updatedAt DateTime  @updatedAt @map(name: "updated_at")
+  deletedAt DateTime? @map(name: "delete_at")
+
+  // 文章内容
+  content      String  @db.LongText
+  // 文章类型
+  type         String?
+  // 点赞数
+  Like         Int?    @default(0) @map(name: "links")
+  // 观看时长
+  WatchingTime Int?    @default(0) @map(name: "watching_time")
+
+  author User   @relation(fields: [userId], references: [id])
+  userId String @unique @map(name: "user_id")
+
+  tags ArticleTags[]
+
+  @@map(name: "article")
+}
+
+model Tag {
+  id          Int           @id @default(autoincrement())
+  icon        String?       @default("i-tabler-bookmark")
+  name        String
+  description String?
+  articles    ArticleTags[]
+
+  @@map(name: "tag")
+}
+
+// 角色表
 model Role {
   id          Int              @id @default(autoincrement())
   Pid         Int              @map("pid")
@@ -51,6 +87,7 @@ model Role {
   @@map(name: "role")
 }
 
+// 权限表
 model Permission {
   id          Int              @id @default(autoincrement())
   name        String           @unique
@@ -105,6 +142,16 @@ model Api {
 }
 
 // 关联表 关联用户和角色
+model ArticleTags {
+  article   Article @relation(fields: [articleId], references: [id])
+  articleId Int     @map("article_id")
+  tag       Tag     @relation(fields: [tagId], references: [id])
+  tagId     Int     @map("tag_id")
+
+  @@id([articleId, tagId])
+  @@map(name: "article_tags")
+}
+
 model UserRole {
   user   User   @relation(fields: [userId], references: [id])
   userId String @map("user_id")

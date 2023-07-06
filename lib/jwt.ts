@@ -1,11 +1,11 @@
 import jwt from 'jsonwebtoken'
 
 export function getJwtConfig() {
-	const expiresIn = process.env.EXPIRES
-	const issuer = process.env.ISSUER
-	const jwtSalt = process.env.JWT_SALT
+	const expiresIn = process.env.EXPIRES || '30'
+	const issuer = process.env.ISSUER || 'app_abc'
+	const jwtSalt = process.env.JWT_SALT || 'abcAbcAbc123'
 
-	return Object.assign({ expiresIn, issuer, jwtSalt }, { expiresIn: '30', issuer: "app_abc", jwtSalt: 'abcAbcAbc123' })
+	return { expiresIn, issuer, jwtSalt }
 }
 
 export function issueToken(payload: string | object) {

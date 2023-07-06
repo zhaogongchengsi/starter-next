@@ -8,11 +8,7 @@ export function getGenerateConfig() {
 	const iterations = parseInt(process.env.ITERATIONS || "100")
 	const keyLength = parseInt(process.env.KEYLENGTH || "10")
 
-	return Object.assign({ salt, iterations, keyLength }, {
-		salt: 'abcAbcCab',
-		iterations: 500,
-		keyLength: 64,
-	})
+	return { salt, iterations, keyLength }
 }
 
 export function generateFromPassword(password: string) {

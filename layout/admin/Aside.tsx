@@ -27,7 +27,7 @@ const AdminAside: React.FC<AdminAsideProps> = ({ baseUrl }) => {
       collapsed={isCollapsed}
     >
       <HeaderLogo />
-      <AsideMenu Menus={pres.menu} baseUrl={baseUrl} />
+      <AsideMenu Menus={pres.menu} />
     </Sidebar>
   );
 };
