@@ -8,7 +8,7 @@ export function getGenerateConfig() {
 	const iterations = parseInt(process.env.ITERATIONS || "100")
 	const keyLength = parseInt(process.env.KEYLENGTH || "10")
 
-	return Object.assign({ salt, iterations, keyLength },{
+	return Object.assign({ salt, iterations, keyLength }, {
 		salt: 'abcAbcCab',
 		iterations: 500,
 		keyLength: 64,
@@ -17,7 +17,7 @@ export function getGenerateConfig() {
 
 export function generateFromPassword(password: string) {
 	const { salt, iterations, keyLength } = getGenerateConfig()
-	const key =  CryptoJS.PBKDF2(password, salt, {
+	const key = CryptoJS.PBKDF2(password, salt, {
 		keySize: keyLength,
 		iterations: iterations
 	});
@@ -29,6 +29,18 @@ export function compareHashAndPassword(hash: string, password: string) {
 
 	const buffer_hash = Buffer.from(hash, 'hex');
 	const buffer_password = Buffer.from(pas, 'hex');
+
+	if (buffer_hash.byteLength !== buffer_password.byteLength) {
+		const length = Math.max(buffer_hash.byteLength, buffer_password.byteLength);
+		const newHashBuffer = Buffer.alloc(length);
+		const newPasswordBuffer = Buffer.alloc(length);
+
+		newHashBuffer.copy(newHashBuffer);
+		newPasswordBuffer.copy(newPasswordBuffer);
+
+		// 对新缓冲区进行比较操作
+		return timingSafeEqual(newHashBuffer, newPasswordBuffer);
+	}
 
 	return timingSafeEqual(buffer_hash, buffer_password);
 }

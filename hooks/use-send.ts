@@ -32,7 +32,7 @@ export function useSend<T>(url: string, timeout = 5000): [send: (body: any, init
 				// todo: 登录超时限制无效
 				timeoutFunc(timeout),
 			]).then((value: Response) => {
-				value.json().then(data => {
+				value?.json().then(data => {
 					resolve(data as any)
 				})
 			}).catch((err) => {

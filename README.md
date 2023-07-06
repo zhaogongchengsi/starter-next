@@ -9,6 +9,7 @@
 - [unocss](https://unocss.org/)
 - [next](https://nextjs.org/)
 - [ui shadcn](https://ui.shadcn.com/docs/installation)
+- [radix-ui](https://www.radix-ui.com/)
 - [icons](https://tabler-icons.io/)
 - [prisma database](https://www.prisma.io/docs/getting-started/setup-prisma/start-from-scratch/relational-databases/using-prisma-migrate-typescript-mysql)
 - [react-pro-sidebar](https://github.com/azouaoui-med/react-pro-sidebar)

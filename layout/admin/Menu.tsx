@@ -50,7 +50,7 @@ const AsideMenu: React.FC<AsideMenuProps> = ({ Menus }) => {
         },
       }}
       rootStyles={{
-        height: "calc(100% - var(--admin-aside-footer-height) - var(--admin-aside-header-height))",
+        height: "calc(100%  - var(--admin-aside-header-height))",
       }}
       key="id"
       renderExpandIcon={({ open }) => {
