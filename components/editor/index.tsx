@@ -2,8 +2,9 @@
 
 import { Editor, Toolbar } from "@wangeditor/editor-for-react";
 import { IDomEditor, IEditorConfig, IToolbarConfig } from "@wangeditor/editor";
-import "@wangeditor/editor/dist/css/style.css";
 import { useState, useEffect } from "react";
+import "@wangeditor/editor/dist/css/style.css";
+import "./style.css"
 
 const BaseEditor: React.FC = () => {
   const [editor, setEditor] = useState<IDomEditor | null>(null);
@@ -29,8 +30,19 @@ const BaseEditor: React.FC = () => {
 
   return (
     <div className="w-full h-full flex flex-col">
-      <Toolbar editor={editor} defaultConfig={toolbarConfig} mode="default" />
-      <Editor defaultConfig={editorConfig} value={html} onCreated={setEditor} className="flex-1" mode="default" />
+      <Toolbar
+        editor={editor}
+        defaultConfig={toolbarConfig}
+        mode="default"
+        className="app-editor-toolbar"
+      />
+      <Editor
+        defaultConfig={editorConfig}
+        value={html}
+        onCreated={setEditor}
+        className="app-editor-container flex-1"
+        mode="default"
+      />
     </div>
   );
 };

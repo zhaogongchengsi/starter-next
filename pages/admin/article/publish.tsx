@@ -19,7 +19,7 @@ const Publish: React.FC<Props> = () => {
       <div className="w-full h-full flex flex-col p-3 gap-2">
         <div className="w-full h-10">123</div>
         <div className="w-full flex-1">
-          <BaseEditor />
+          <BaseEditor  />
         </div>
       </div>
     </Layout>
