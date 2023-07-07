@@ -1,10 +1,10 @@
 "use client";
 
 import { Editor, Toolbar } from "@wangeditor/editor-for-react";
-import { IDomEditor, IEditorConfig, IToolbarConfig } from "@wangeditor/editor";
+import { IDomEditor, IEditorConfig, IToolbarConfig, DomEditor } from "@wangeditor/editor";
 import { useState, useEffect } from "react";
 import "@wangeditor/editor/dist/css/style.css";
-import "./style.css"
+import "./style.css";
 
 const BaseEditor: React.FC = () => {
   const [editor, setEditor] = useState<IDomEditor | null>(null);
@@ -13,7 +13,9 @@ const BaseEditor: React.FC = () => {
   const [html, setHtml] = useState("");
 
   // 工具栏配置
-  const toolbarConfig: Partial<IToolbarConfig> = {};
+  const toolbarConfig: Partial<IToolbarConfig> = {
+    excludeKeys: ["fullScreen"],
+  };
 
   // 编辑器配置
   const editorConfig: Partial<IEditorConfig> = {
@@ -30,12 +32,7 @@ const BaseEditor: React.FC = () => {
 
   return (
     <div className="w-full h-full flex flex-col app-editor">
-      <Toolbar
-        editor={editor}
-        defaultConfig={toolbarConfig}
-        mode="default"
-        className="app-editor-toolbar"
-      />
+      <Toolbar editor={editor} defaultConfig={toolbarConfig} mode="default" className="app-editor-toolbar" />
       <Editor
         defaultConfig={editorConfig}
         value={html}

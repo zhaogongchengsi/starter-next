@@ -42,13 +42,16 @@
   --app-editor-background: hsl(var(--background));
   --app-editor-foreground: hsl(var(--foreground));
 
+  /* 编辑器弹出框样式 */
+  --app-editor-toolbar-color: #333;
+  --app-editor-toolbar-active-bg-color: #bbbbbb;
+  --app-editor-toolbar-active-color: #faf7f7;
+
   /* 编辑器线框颜色 */
   --app-editor-divider-color: #707070;
 }
 
 .dark {
-  --app-editor-divider-color: #696969;
-
   --background: 224, 71%, 4%;
   --foreground: 213, 31%, 91%;
 
@@ -79,6 +82,12 @@
   --ring: 216, 34%, 17%;
 
   --radius: 0.5rem;
+
+  --app-editor-divider-color: #696969;
+  --app-editor-toolbar-color: #cccccc;
+  --app-editor-toolbar-active-bg-color: #282828;
+
+  --app-editor-toolbar-active-color: #faf7f7;
 }
 
 body {

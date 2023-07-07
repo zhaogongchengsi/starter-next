@@ -15,6 +15,15 @@
   color: var(--app-editor-toolbar-foreground);
 }
 
+.app-editor-toolbar .w-e-toolbar .w-e-bar-item-menus-container {
+  background-color: var(--app-editor-toolbar-background);
+  color: var(--app-editor-toolbar-foreground);
+
+  --w-e-toolbar-color: var(--app-editor-toolbar-color);
+  --w-e-toolbar-active-bg-color: var(--app-editor-toolbar-active-bg-color);
+  --w-e-toolbar-active-color: var(--app-editor-toolbar-active-color);
+}
+
 .app-editor-toolbar .w-e-toolbar .w-e-bar-divider {
   background-color: var(--app-editor-divider-color);
 }
