@@ -31,6 +31,10 @@
 .app-editor-container {
   border: 1px solid var(--app-editor-divider-color);
   border-top: 0;
+
+  /* 定义悬浮框颜色 */
+  --w-e-toolbar-bg-color: var(--app-editor-toolbar-background);
+  --w-e-toolbar-color: var(--app-editor-toolbar-foreground);
 }
 
 .app-editor-container .w-e-text-container {
