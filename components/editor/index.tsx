@@ -10,7 +10,7 @@ const BaseEditor: React.FC = () => {
   const [editor, setEditor] = useState<IDomEditor | null>(null);
 
   // 编辑器内容
-  const [html, setHtml] = useState("<p>hello</p>");
+  const [html, setHtml] = useState("");
 
   // 工具栏配置
   const toolbarConfig: Partial<IToolbarConfig> = {};
@@ -29,7 +29,7 @@ const BaseEditor: React.FC = () => {
   }, [editor]);
 
   return (
-    <div className="w-full h-full flex flex-col">
+    <div className="w-full h-full flex flex-col app-editor">
       <Toolbar
         editor={editor}
         defaultConfig={toolbarConfig}

@@ -1,11 +1,4 @@
 :root {
-  --app-background: #ffffff;
-  --app-foreground: #1c1f23;
-  --app-background-hover: #ccc;
-  --app-background-hover: #1c7dec;
-
-  --app-border-color: #b5b5b5;
-
   --background: 0, 0%, 100%;
   --foreground: 222.2, 47.4%, 11.2%;
 
@@ -36,14 +29,25 @@
   --ring: 215, 20.2%, 65.1%;
 
   --radius: 0.5rem;
+
+  --app-background: hsl(var(--background));
+  --app-foreground: hsl(var(--foreground));
+  --app-background-hover: #ccc;
+  --app-background-hover: #1c7dec;
+
+  --app-border-color: hsl(var(--border));
+
+  --app-editor-toolbar-background: hsl(var(--background));
+  --app-editor-toolbar-foreground: hsl(var(--foreground));
+  --app-editor-background: hsl(var(--background));
+  --app-editor-foreground: hsl(var(--foreground));
+
+  /* 编辑器线框颜色 */
+  --app-editor-divider-color: #707070;
 }
 
 .dark {
-  --app-background: #232429;
-  --app-foreground: #f9f9f9;
-  --app-background-hover: #ccc;
-  --app-background-hover: #1c7dec;
-  --app-border-color: #535353;
+  --app-editor-divider-color: #696969;
 
   --background: 224, 71%, 4%;
   --foreground: 213, 31%, 91%;

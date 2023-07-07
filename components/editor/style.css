@@ -1,24 +1,30 @@
+.app-editor {
+  --w-e-toolbar-color: #333;
+}
 
+.dark .app-editor {
+  --w-e-toolbar-color: #fff;
+}
 
 .app-editor-toolbar {
-  border: 1px solid var(--app-border-color);
+  border: 1px solid var(--app-editor-divider-color);
 }
 
 .app-editor-toolbar .w-e-toolbar {
-  background-color: var(--app-background);
-  color: var(--app-foreground);
+  background-color: var(--app-editor-toolbar-background);
+  color: var(--app-editor-toolbar-foreground);
 }
 
 .app-editor-toolbar .w-e-toolbar .w-e-bar-divider {
-  background-color: var(--app-border-color);
+  background-color: var(--app-editor-divider-color);
 }
 
 .app-editor-container {
-  border: 1px solid var(--app-border-color);
+  border: 1px solid var(--app-editor-divider-color);
   border-top: 0;
 }
 
 .app-editor-container .w-e-text-container {
-  background-color: var(--app-background);
-  color: var(--app-foreground);
+  background-color: var(--app-editor-background);
+  color: var(--app-editor-foreground);
 }
