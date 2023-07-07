@@ -1,4 +1,3 @@
-import { IBaseEditor } from "@/components/editor";
 import { Button } from "@/components/ui/button";
 import Layout from "@/layout/admin";
 import dynamic from "next/dynamic";

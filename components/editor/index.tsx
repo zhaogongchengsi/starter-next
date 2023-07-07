@@ -8,7 +8,7 @@ import "./style.css";
 
 export interface BaseEditorProps {
   value?: string;
-  onChange?: (html: string) => void;
+  onChange?: (html: string, json: any) => void;
 }
 
 export interface IBaseEditor extends IDomEditor {}
@@ -27,14 +27,13 @@ const BaseEditor = ({ value, onChange }, ref) => {
   };
 
   useImperativeHandle(ref, () => ({
-    editor,
+    getEditor: () => editor,
     editorConfig,
     toolbarConfig,
   }));
 
   const iOnChange = (edit: IDomEditor) => {
-    // console.log(edit.getHtml());
-    onChange(edit.getHtml());
+    onChange(edit.getHtml(), edit.children);
   };
 
   useEffect(() => {
