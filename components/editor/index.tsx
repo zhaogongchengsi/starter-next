@@ -1,30 +1,38 @@
 "use client";
 
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { Editor, Toolbar } from "@wangeditor/editor-for-react";
+import { IDomEditor, IEditorConfig, IToolbarConfig } from "@wangeditor/editor";
+import "@wangeditor/editor/dist/css/style.css";
+import { useState, useEffect } from "react";
 
-const Editor: React.FC = () => {
+const BaseEditor: React.FC = () => {
+  const [editor, setEditor] = useState<IDomEditor | null>(null);
+
+  // 编辑器内容
+  const [html, setHtml] = useState("<p>hello</p>");
+
+  // 工具栏配置
+  const toolbarConfig: Partial<IToolbarConfig> = {};
+
+  // 编辑器配置
+  const editorConfig: Partial<IEditorConfig> = {
+    placeholder: "请输入内容...",
+  };
+
+  useEffect(() => {
+    return () => {
+      if (editor == null) return;
+      editor.destroy();
+      setEditor(null);
+    };
+  }, [editor]);
+
   return (
-    <div>
-      <CKEditor
-        editor={ClassicEditor}
-        data="<p>Hello from CKEditor 5!</p>"
-        onReady={(editor) => {
-          console.log("Editor is ready to use!", editor);
-        }}
-        onChange={(event, editor) => {
-          const data = editor.getData();
-          console.log({ event, editor, data });
-        }}
-        onBlur={(event, editor) => {
-          console.log("Blur.", editor);
-        }}
-        onFocus={(event, editor) => {
-          console.log("Focus.", editor);
-        }}
-      />
+    <div className="w-full h-full flex flex-col">
+      <Toolbar editor={editor} defaultConfig={toolbarConfig} mode="default" />
+      <Editor defaultConfig={editorConfig} value={html} onCreated={setEditor} className="flex-1" mode="default" />
     </div>
   );
 };
 
-export default Editor;
+export default BaseEditor;
