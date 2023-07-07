@@ -1,9 +1,11 @@
 "use client";
 import Layout from "@/layout/admin";
 
-interface Props {}
+interface Props {
+  children: React.ReactNode;
+}
 
-const Admin: React.FC<Props> = (props) => {
+const Admin: React.FC<Props> = ({}) => {
   return (
     <Layout baseUrl="admin">
       <div>123</div>
